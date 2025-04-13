@@ -81,6 +81,8 @@ body {
   padding: 4rem 6%;
   background: linear-gradient(135deg, #0a0f1a, #111b2f);
   gap: 2rem;
+  width: 100vw;           /* Full width */
+  height: 100vh;
 }
 
 .hero-text {

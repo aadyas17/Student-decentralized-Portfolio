@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Decentralized Student Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
+      integrity="sha512-papKgoRzDWxH+fZAkYZaY3FrHXjo5z1S5KxnZTtHp5abN5TcRprKVGdo4M5n5owgTZhUO+P85sc4R+19RXkTsg==" 
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <section class="homepage" id="home">
+    <header class="navbar">
+      <div class="logo">🎓Welcome to Student Portfolio</div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#about">About</a>
+        <a href="portfolio.html">Create Portfolio</a>
+        <button id="connectWalletBtn">Login with MetaMask</button>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Help Students Securely Showcase Their Potential</h1>
+        <p>Empower students with a decentralized platform to display academic and personal achievements on the blockchain—secure, tamper-proof, and future-ready.</p>
+        <button id="connectWalletBtnHero">Connect MetaMask</button>
+      </div>
+      <div class="hero-image">
+        <img src="student.jpeg" alt="Student" />
+      </div>
+    </section>
+  </section>
+
+  <section id="about" class="about">
+    <h2><div id="about">About</div></h2>
+    <p>The Decentralized Student Portfolio System is designed to transform how students manage and present their academic and extracurricular accomplishments. By utilizing blockchain technology, we eliminate the risks associated with centralized data storage, ensuring that all records are tamper-proof, verifiable, and permanently accessible.</p>
+    <p>This platform offers students a trusted environment to showcase their achievements while providing institutions and employers with instant, verifiable access to certified records.</p>
+  </section>
+  
+  <section class="cta-section">
+    <h2 class="cta-heading">Explore Your Portfolio</h2>
+    <div class="cta">
+      <div class="feature-card">
+        <i class="fas fa-book-open"></i>
+        <p><strong>Academics</strong>: Showcase academic achievements, grades, and coursework.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-project-diagram"></i>
+        <p><strong>Projects</strong>: Highlight personal and academic projects with detailed descriptions.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-certificate"></i>
+        <p><strong>Certificates</strong>: Display certifications and awards earned from various institutions.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-running"></i>
+        <p><strong>Activities</strong>: Record extracurricular activities, sports, and volunteer work.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-lock"></i>
+        <p><strong>Blockchain</strong>: Ensure data security and immutability through blockchain technology.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MetaMask Connection Script -->
+  <script>
+    let isConnecting = false;
+
+    const connectWallet = async () => {
+      if (isConnecting) return;
+      isConnecting = true;
+    
+      if (typeof window.ethereum !== 'undefined') {
+        console.log("MetaMask is available");
+    
+        try {
+          const accounts = await window.ethereum.request({
+            method: 'eth_requestAccounts'
+          });
+    
+          const walletAddress = accounts[0];
+          alert("Connected wallet: " + walletAddress);
+          window.location.href = "second.html";
+        } catch (error) {
+          console.error("Connection error:", error);
+          if (error.code === -32002) {
+            alert("MetaMask is already requesting permission. Please check the MetaMask popup.");
+          }
+        }
+      } else {
+        alert("MetaMask is not installed. Please install it: https://metamask.io/download.html");
+      }
+    
+      isConnecting = false;
+    };
+    
+    document.getElementById("connectWalletBtn")?.addEventListener("click", connectWallet);
+    document.getElementById("connectWalletBtnHero")?.addEventListener("click", connectWallet);
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

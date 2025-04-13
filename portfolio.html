@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Your Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="main-container">
+    <div class="form-container">
+      <h1><i class="fas fa-id-card-alt"></i> Create Your Portfolio</h1>
+      <form id="portfolioForm">
+
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Enter your full name" required>
+
+        <!-- Academic Achievements -->
+        <div class="input-group">
+          <label>Academic Achievements</label>
+          <div class="multi-input">
+            <input type="text" name="achievements[]" placeholder="Enter academic achievement">
+            <button type="button" class="add-btn" onclick="addField(this)">+ Add More</button>
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="input-group">
+          <label>Projects</label>
+          <div class="multi-input">
+            <input type="text" name="projects[]" placeholder="Enter project">
+            <button type="button" class="add-btn" onclick="addField(this)">+ Add More</button>
+          </div>
+        </div>
+
+        <!-- Extracurricular -->
+        <div class="input-group">
+          <label>Extracurricular Activities</label>
+          <div class="multi-input">
+            <input type="text" name="activities[]" placeholder="Enter activity">
+            <button type="button" class="add-btn" onclick="addField(this)">+ Add More</button>
+          </div>
+        </div>
+
+        <!-- Certificates -->
+        <div class="input-group"> 
+            <label>Certificates (with Image Upload)</label>
+            <div class="multi-input cert-upload">
+              <input type="text" name="certificates[]" placeholder="Certificate Title">
+              <input type="file" name="certificateImages[]" accept=".jpg,.pdf">
+              <button type="button" class="add-btn" onclick="addCertificate(this)">+ Add More</button>
+            </div>
+          </div>
+          
+
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-save"></i> Save Portfolio
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function addField(button) {
+      const container = button.parentElement;
+      const newInput = document.createElement("input");
+      newInput.type = "text";
+      newInput.placeholder = "Enter more";
+      newInput.name = container.querySelector("input").name;
+      container.insertBefore(newInput, button);
+    }
+
+    function addCertificate(button) {
+      const container = button.parentElement;
+      const textInput = document.createElement("input");
+      const fileInput = document.createElement("input");
+
+      textInput.type = "text";
+      textInput.placeholder = "Certificate Title";
+      textInput.name = "certificates[]";
+
+      fileInput.type = "file";
+      fileInput.accept = "image/*";
+      fileInput.name = "certificateImages[]";
+
+      container.insertBefore(textInput, button);
+      container.insertBefore(fileInput, button);
+    }
+  </script>
+</body>
+</html>

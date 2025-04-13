@@ -1,0 +1,250 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0a0f1a;
+  color: #e0e8f0;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+.homepage {
+  width: 100vw;           /* Full width */
+  height: 100vh;          /* Full height of the viewport */
+  display: flex;
+  flex-direction: column;
+  background-color: #0d1624; /* Optional: background color */
+  color: #ffffff;
+  overflow: hidden;
+}
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background-color: #0d1624;
+  border-bottom: 1px solid #1c2736;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #57a6ff;
+}
+
+.navbar nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar nav a {
+  color: #c0d3e5;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar nav a:hover {
+  color: #57a6ff;
+}
+
+.navbar nav button {
+  padding: 0.5rem 1rem;
+  background: #57a6ff;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.navbar nav button:hover {
+  background: #4098f7;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem 6%;
+  background: linear-gradient(135deg, #0a0f1a, #111b2f);
+  gap: 2rem;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.hero-text p {
+  color: #b0c4de;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-text button {
+  background-color: #57a6ff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.hero-text button:hover {
+  background-color: #4098f7;
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(87, 166, 255, 0.3);
+    transition: transform 0.3s ease;
+  
+}
+
+/* About Section */
+.about {
+  padding: 4rem 6%;
+  background-color: #111b2f;
+  text-align: center;
+}
+#about {
+  font-size:2.5rem;
+}
+
+.about h2 {
+  font-size: 2rem;
+  color: #57a6ff;
+  margin-bottom: 1rem;
+}
+
+.about p {
+  color: #c0d3e5;
+  margin: 1rem 0;
+  font-size: 1rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about button {
+  margin: 1rem 0.5rem;
+  background-color: #57a6ff;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.about button:hover {
+  background-color: #4098f7;
+}
+
+/* Feature Cards */
+/* Section Layout */
+.cta-section {
+  background-color: #0d1624;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.cta-heading {
+  font-size: 2.5rem;
+  color: #57a6ff;
+  margin-bottom: 3rem;
+  font-weight: 600;
+}
+
+/* Flex layout for cards */
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+/* Feature Card */
+.feature-card {
+  background-color: #1a2332;
+  border: 1px solid #263141;
+  padding: 1.8rem;
+  border-radius: 12px;
+  max-width: 350px;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  color: #d0e4f7;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(87, 166, 255, 0.25);
+}
+
+.feature-card i {
+  font-size: 2rem;
+  color: #57a6ff;
+  flex-shrink: 0;
+}
+
+.feature-card p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+  .cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature-card {
+    width: 100%;
+    max-width: 90%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .feature-card p {
+    text-align: center;
+  }
+}
+
+
+

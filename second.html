@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Portfolio Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-papKgoRzDWxH+fZAkYZaY3FrHXjo5z1S5KxnZTtHp5abN5TcRprKVGdo4M5n5owgTZhUO+P85sc4R+19RXkTsg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0f1a;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #39a7ff;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      margin: 10px 0;
+      width: 250px;
+    }
+
+    button {
+      padding: 12px 20px;
+      margin: 10px;
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0c75d3;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔗 Connect MetaMask</h1>
+  <button id="connectBtn"><i class="fas fa-wallet"></i> Connect Wallet</button>
+
+  <div id="dashboard" class="hidden">
+    <h1>Welcome to Your Portfolio</h1>
+
+    <input type="text" id="studentName" placeholder="Enter your name" />
+
+    <div>
+      <button onclick="goToCreate()"><i class="fas fa-plus-circle"></i> Create Portfolio</button>
+      <button onclick="viewPortfolio()"><i class="fas fa-eye"></i> View Portfolio</button>
+    </div>
+  </div>
+
+  <script>
+    let isConnecting = false;
+
+    const connectWallet = async () => {
+      if (isConnecting) return;
+      isConnecting = true;
+
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          const accounts = await window.ethereum.request({
+            method: 'eth_requestAccounts'
+          });
+
+          const walletAddress = accounts[0];
+          console.log("Connected:", walletAddress);
+          alert("Wallet connected: " + walletAddress);
+
+          document.getElementById("connectBtn").classList.add("hidden");
+          document.getElementById("dashboard").classList.remove("hidden");
+
+        } catch (err) {
+          console.error(err);
+          if (err.code === -32002) {
+            alert("Request already pending. Please check your MetaMask.");
+          }
+        }
+      } else {
+        alert("MetaMask not installed. Get it from https://metamask.io/download.html");
+      }
+
+      isConnecting = false;
+    };
+
+    function goToCreate() {
+      const name = document.getElementById("studentName").value;
+      if (!name) {
+        alert("Please enter your name first.");
+        return;
+      }
+      // You can pass name via localStorage or URL query if needed
+      window.location.href = "portfolio.html";
+    }
+
+    function viewPortfolio() {
+      const name = document.getElementById("studentName").value;
+      if (!name) {
+        alert("Please enter your name to view your portfolio.");
+        return;
+      }
+      // In future: implement fetch/view logic from blockchain
+      alert("View functionality coming soon for: " + name);
+    }
+
+    document.getElementById("connectBtn").addEventListener("click", connectWallet);
+  </script>
+</body>
+</html>

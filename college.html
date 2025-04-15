@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>College Dashboard - Student Portfolio System</title>
+  <link rel="stylesheet" href="college.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
+      integrity="sha512-papKgoRzDWxH+fZAkYZaY3FrHXjo5z1S5KxnZTtHp5abN5TcRprKVGdo4M5n5owgTZhUO+P85sc4R+19RXkTsg==" 
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">🎓 Student Portfolio System</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="college.html" class="active">Dashboard</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+    <div class="user-info">
+      <span class="role-badge" id="userRoleBadge">College Role</span>
+      <span class="wallet-address" id="walletAddressDisplay">0x12...34ab</span>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li><a href="#" class="active" onclick="showTab('dashboard')"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+        <li><a href="#" onclick="showTab('verify')"><i class="fas fa-check-circle"></i>Verify Students</a></li>
+        <li><a href="#" onclick="showTab('portfolios')"><i class="fas fa-user-graduate"></i>Student Portfolios</a></li>
+      </ul>
+    </aside>
+    
+    <main class="content-area">
+      <div class="dashboard-header">
+        <h1 id="welcomeMessage">Welcome, College Admin</h1>
+        <p>Manage student verification and view portfolios</p>
+      </div>
+      
+      <div class="stats-container" id="statsContainer">
+        <!-- Stats will be populated from blockchain -->
+        <div class="stat-card">
+          <div class="stat-value" id="pendingCount">...</div>
+          <div class="stat-label">Pending Verifications</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="verifiedCount">...</div>
+          <div class="stat-label">Verified Students</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="newPortfolioCount">...</div>
+          <div class="stat-label">New Portfolios</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="companyRequestCount">...</div>
+          <div class="stat-label">Company Requests</div>
+        </div>
+      </div>
+      
+      <div class="tab-container">
+        <div class="tabs">
+          <button class="tab-button active" data-tab="dashboard">Dashboard Overview</button>
+          <button class="tab-button" data-tab="verify">Verify Students</button>
+          <button class="tab-button" data-tab="portfolios">Student Portfolios</button>
+        </div>
+        
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboard">
+          <div id="recentVerificationRequests">
+            <!-- Recent verification requests will be loaded here -->
+          </div>
+        </div>
+        
+        <!-- Verify Students Tab -->
+        <div class="tab-content" id="verify">
+          <div class="search-container">
+            <input type="text" id="verifySearchInput" class="search-input" placeholder="Search by student name, ID or document type...">
+            <button class="search-button" onclick="searchVerificationRequests()">
+              <i class="fas fa-search"></i> Search
+            </button>
+          </div>
+          
+          <div class="student-list">
+            <table class="student-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Student ID</th>
+                  <th>Document Type</th>
+                  <th>Submission Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="verificationRequestsTable">
+                <!-- Verification requests will be loaded here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- Student Portfolios Tab -->
+        <div class="tab-content" id="portfolios">
+          <div class="search-container">
+            <input type="text" id="portfolioSearchInput" class="search-input" placeholder="Search students by name, ID or department...">
+            <button class="search-button" onclick="searchStudentPortfolios()">
+              <i class="fas fa-search"></i> Search
+            </button>
+          </div>
+          
+          <div class="student-list">
+            <table class="student-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Student ID</th>
+                  <th>Department</th>
+                  <th>Year</th>
+                  <th>Verification Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentPortfoliosTable">
+                <!-- Student portfolios will be loaded here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Student Portfolio Modal -->
+  <div id="portfolioModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('portfolioModal')">&times;</span>
+      
+      <div class="portfolio-header">
+        <div class="portfolio-avatar">
+          <i class="fas fa-user-graduate"></i>
+        </div>
+        <div class="portfolio-title">
+          <h2 id="studentName">Loading...</h2>
+          <p id="studentDepartment">Loading...</p>
+          <p id="studentAddress">Wallet: Loading...</p>
+        </div>
+      </div>
+      
+      <div id="portfolioContent">
+        <!-- Portfolio content will be loaded dynamically -->
+      </div>
+      
+      <div class="modal-actions" id="portfolioActions">
+        <!-- Actions for the portfolio will be added here based on context -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Success/Error Toast -->
+  <div id="toast" class="toast"></div>
+  <script src="college.js"></script>
+</body>
+</html>

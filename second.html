@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Student Portfolio Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     integrity="sha512-papKgoRzDWxH+fZAkYZaY3FrHXjo5z1S5KxnZTtHp5abN5TcRprKVGdo4M5n5owgTZhUO+P85sc4R+19RXkTsg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -54,6 +54,10 @@
     .hidden {
       display: none;
     }
+
+    .portfolio-details {
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -69,11 +73,44 @@
     <div>
       <button onclick="goToCreate()"><i class="fas fa-plus-circle"></i> Create Portfolio</button>
       <button onclick="viewPortfolio()"><i class="fas fa-eye"></i> View Portfolio</button>
+      <!-- <button onclick="AIfeedback()"><i class="fas fa-eye"></i> Generate AI feedback</button> -->
     </div>
+
+    <div class="portfolio-details" id="portfolioDetails"></div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
   <script>
     let isConnecting = false;
+    let web3;
+    let contract;
+    let contractAddress = "0x4e4C68d970A36C445B51c7107028d091039a7bCe";  // Replace with your contract address
+    let contractABI = [
+      {
+        "inputs": [
+          { "internalType": "string", "name": "_name", "type": "string" }
+        ],
+        "name": "createPortfolio",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          { "internalType": "address", "name": "user", "type": "address" }
+        ],
+        "name": "viewPortfolio",
+        "outputs": [
+          { "internalType": "string", "name": "name", "type": "string" },
+          { "internalType": "string[]", "name": "achievements", "type": "string[]" },
+          { "internalType": "string[]", "name": "projects", "type": "string[]" },
+          { "internalType": "string[]", "name": "activities", "type": "string[]" },
+          { "internalType": "string[]", "name": "certificates", "type": "string[]" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ];
 
     const connectWallet = async () => {
       if (isConnecting) return;
@@ -88,6 +125,9 @@
           const walletAddress = accounts[0];
           console.log("Connected:", walletAddress);
           alert("Wallet connected: " + walletAddress);
+
+          web3 = new Web3(window.ethereum);
+          contract = new web3.eth.Contract(contractABI, contractAddress);
 
           document.getElementById("connectBtn").classList.add("hidden");
           document.getElementById("dashboard").classList.remove("hidden");
@@ -115,16 +155,58 @@
       window.location.href = "portfolio.html";
     }
 
-    function viewPortfolio() {
-      const name = document.getElementById("studentName").value;
-      if (!name) {
-        alert("Please enter your name to view your portfolio.");
-        return;
-      }
-      // In future: implement fetch/view logic from blockchain
-      alert("View functionality coming soon for: " + name);
+    async function viewPortfolio() {
+  const name = document.getElementById("studentName").value;
+  if (!name) {
+    alert("Please enter your name to view your portfolio.");
+    return;
+  }
+
+  const accounts = await web3.eth.getAccounts();
+  const userAddress = accounts[0];
+
+  try {
+    const result = await contract.methods.viewPortfolio(userAddress).call();
+    console.log("Portfolio Data:", result); // Log the returned data for debugging
+
+    const portfolio = result;
+
+    if (!portfolio.name) {
+      document.getElementById("portfolioDetails").innerHTML = `
+        <p>No portfolio found. Please create one.</p>
+      `;
+      return;
     }
 
+    // Check if the portfolio has certificates
+    let certificateLinks = '';
+    if (portfolio.certificates && portfolio.certificates.length > 0) {
+      certificateLinks = portfolio.certificates.map(cert => {
+        // Debugging certificate URL construction
+        let certificateURL = cert.startsWith("ipfs://")
+          ? `https://ipfs.io/ipfs/${cert.slice(7)}` // Convert IPFS hash to URL
+          : cert; // If it's already a URL, use it directly
+
+        console.log("Certificate URL:", certificateURL); // Debug log for certificate URL
+
+        return `<a href="${certificateURL}" target="_blank">Open Certificate</a>`;
+      }).join('<br>');
+    } else {
+      certificateLinks = 'No certificates added';
+    }
+
+    document.getElementById("portfolioDetails").innerHTML = `
+      <h2>${portfolio.name}'s Portfolio</h2>
+      <p><strong>Academic Achievements:</strong> ${portfolio.achievements.length ? portfolio.achievements.join(', ') : 'No achievements added'}</p>
+      <p><strong>Projects:</strong> ${portfolio.projects.length ? portfolio.projects.join(', ') : 'No projects added'}</p>
+      <p><strong>Extracurricular Activities:</strong> ${portfolio.activities.length ? portfolio.activities.join(', ') : 'No activities added'}</p>
+      <p><strong>Certificates:</strong> ${certificateLinks}</p>
+    `;
+  } catch (err) {
+    console.error(err);
+    alert("Error fetching portfolio: " + err.message);
+  }
+}
     document.getElementById("connectBtn").addEventListener("click", connectWallet);
   </script>
 </body>

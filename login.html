@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Login - Student Portfolio</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
+      integrity="sha512-papKgoRzDWxH+fZAkYZaY3FrHXjo5z1S5KxnZTtHp5abN5TcRprKVGdo4M5n5owgTZhUO+P85sc4R+19RXkTsg==" 
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">🎓 Student Portfolio System</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="#" class="active">Login</a>
+    </nav>
+  </header>
+
+  <div class="main-container">
+    <div class="login-container">
+      <div class="login-header">
+        <h2>Choose Your User Type</h2>
+        <p>Select your role to access the appropriate dashboard</p>
+      </div>
+      
+      <div class="user-types">
+        <div class="user-card" onclick="openStudentLogin()">
+          <i class="fas fa-user-graduate"></i>
+          <h3>Student</h3>
+          <p>Create and manage your academic portfolio, showcase achievements and get verified by your institution</p>
+          <button class="login-button" id="studentLoginBtn">
+            <i class="fas fa-sign-in-alt"></i> Login as Student
+          </button>
+        </div>
+        
+        <div class="user-card" onclick="openCollegeModal()">
+          <i class="fas fa-university"></i>
+          <h3>College</h3>
+          <p>Verify student credentials, approve portfolios, and manage institutional verification processes</p>
+          <button class="login-button" id="collegeLoginBtn">
+            <i class="fas fa-sign-in-alt"></i> Login as College
+          </button>
+        </div>
+        
+        <div class="user-card" onclick="openCompanyLogin()">
+          <i class="fas fa-building"></i>
+          <h3>Company</h3>
+          <p>Browse verified student portfolios, view certifications, and connect with potential candidates</p>
+          <button class="login-button" id="companyLoginBtn">
+            <i class="fas fa-sign-in-alt"></i> Login as Company
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- College Role Modal -->
+  <div id="collegeModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal('collegeModal')">&times;</span>
+      <h3 style="color: #57a6ff; text-align: center; margin-bottom: 20px;">Select Your Role</h3>
+      
+      <div class="college-options">
+        <div class="role-option" onclick="loginWithRole('proctor')">
+          <label>
+            <input type="radio" name="collegeRole" value="proctor">
+            <span>Proctor</span>
+          </label>
+        </div>
+        <div class="role-option" onclick="loginWithRole('hod')">
+          <label>
+            <input type="radio" name="collegeRole" value="hod">
+            <span>Head of Department (HOD)</span>
+          </label>
+        </div>
+        <div class="role-option" onclick="loginWithRole('dean')">
+          <label>
+            <input type="radio" name="collegeRole" value="dean">
+            <span>Dean</span>
+          </label>
+        </div>
+        <div class="role-option" onclick="loginWithRole('coe')">
+          <label>
+            <input type="radio" name="collegeRole" value="coe">
+            <span>Controller of Examination (COE)</span>
+          </label>
+        </div>
+        <div class="role-option" onclick="loginWithRole('placement')">
+          <label>
+            <input type="radio" name="collegeRole" value="placement">
+            <span>Placement Officer</span>
+          </label>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 25px;">
+        <button class="login-button" onclick="connectCollegeWallet()">
+          <i class="fas fa-wallet"></i> Connect with MetaMask
+        </button>
+      </div>
+    </div>
+  </div>
+  <script src="login.js"></script>
+</body>
+</html>

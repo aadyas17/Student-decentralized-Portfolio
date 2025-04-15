@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Company Portal - Student Portfolio System</title>
+  <link rel="stylesheet" href="company.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
+      integrity="sha512-papKgoRzDWxH+fZAkYZaY3FrHXjo5z1S5KxnZTtHp5abN5TcRprKVGdo4M5n5owgTZhUO+P85sc4R+19RXkTsg==" 
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">🎓 Student Portfolio System</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html">Logout</a>
+    </nav>
+  </header>
+
+  <div class="company-container">
+    <div class="dashboard-header">
+      <h2>Company Dashboard</h2>
+      <p>Browse verified student portfolios from the blockchain</p>
+    </div>
+    
+    <div class="wallet-info">
+      <div class="wallet-address">
+        <i class="fas fa-wallet"></i>
+        <span id="company-wallet-address">Connecting to wallet...</span>
+      </div>
+      <button class="disconnect-btn" onclick="disconnectWallet()">
+        <i class="fas fa-sign-out-alt"></i> Disconnect
+      </button>
+    </div>
+    
+    <div class="search-container">
+      <div class="search-header">
+        <h3>Search for Students</h3>
+        <p>Find verified student portfolios based on criteria</p>
+      </div>
+      
+      <form class="search-form" onsubmit="searchStudents(event)">
+        <div class="search-group">
+          <label for="search-name">Student Name</label>
+          <input type="text" id="search-name" class="search-input" placeholder="Enter student name">
+        </div>
+        
+        <div class="search-group">
+          <label for="search-college">College/Institution</label>
+          <input type="text" id="search-college" class="search-input" placeholder="Enter college name">
+        </div>
+        
+        <div class="search-group">
+          <label for="search-skills">Skills</label>
+          <input type="text" id="search-skills" class="search-input" placeholder="E.g. Java, Python, Blockchain">
+        </div>
+        
+        <div class="search-group">
+          <label for="search-cgpa">Minimum CGPA</label>
+          <input type="number" id="search-cgpa" class="search-input" placeholder="Enter minimum CGPA" min="0" max="10" step="0.1">
+        </div>
+        
+        <button type="submit" class="search-btn">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </form>
+      
+      <div class="loader" id="search-loader">
+        <i class="fas fa-spinner"></i>
+        <p>Fetching student data from blockchain...</p>
+      </div>
+      
+      <div class="student-results" id="student-results">
+        <!-- Student cards will be populated here -->
+      </div>
+      
+      <div class="no-results" id="no-results" style="display: none;">
+        <i class="fas fa-search"></i>
+        <h3>No Students Found</h3>
+        <p>Try different search criteria or check back later</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Student Details Modal -->
+  <div id="studentDetailsModal" class="student-details-modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeStudentDetails()">&times;</span>
+      
+      <div class="tab-navigation">
+        <button class="tab-button active" onclick="openTab(event, 'tab-personal')">Personal Info</button>
+        <button class="tab-button" onclick="openTab(event, 'tab-academic')">Academic Records</button>
+        <button class="tab-button" onclick="openTab(event, 'tab-certificates')">Certificates</button>
+        <button class="tab-button" onclick="openTab(event, 'tab-projects')">Projects</button>
+        <button class="tab-button" onclick="openTab(event, 'tab-skills')">Skills & Endorsements</button>
+      </div>
+      
+      <div id="tab-personal" class="tab-content active">
+        <div class="detail-section">
+          <h3>Personal Information</h3>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <div class="detail-label">Student Name</div>
+              <div class="detail-value" id="modal-student-name">Loading...</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Email</div>
+              <div class="detail-value" id="modal-student-email">Loading...</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Contact Number</div>
+              <div class="detail-value" id="modal-student-contact">Loading...</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">University/College</div>
+              <div class="detail-value" id="modal-student-college">Loading...</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Blockchain ID</div>
+              <div class="student-blockchain-id" id="modal-student-blockchain-id">Loading...</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Verification Status</div>
+              <div class="verification-badge" id="modal-student-verification">
+                <i class="fas fa-check-circle"></i> Verified by Institution
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="tab-academic" class="tab-content">
+        <div class="detail-section">
+          <h3>Academic Information</h3>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <div class="detail-label">Degree</div>
+              <div class="detail-value" id="modal-student-degree">Loading...</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Department</div>
+              <div class="detail-value" id="modal-student-department">Loading...</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Current CGPA</div>
+              <div class="detail-value" id="modal-student-cgpa">Loading...</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Year of Study</div>
+              <div class="detail-value" id="modal-student-year">Loading...</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <h3>Semester Results</h3>
+          <div id="semester-results">
+            <!-- Semester results will be populated here -->
+          </div>
+        </div>
+      </div>
+      
+      <div id="tab-certificates" class="tab-content">
+        <div class="detail-section">
+          <h3>Certificates & Achievements</h3>
+          <div class="certificate-list" id="certificate-list">
+            <!-- Certificates will be populated here -->
+          </div>
+        </div>
+      </div>
+      
+      <div id="tab-projects" class="tab-content">
+        <div class="detail-section">
+          <h3>Projects & Work</h3>
+          <div class="project-list" id="project-list">
+            <!-- Projects will be populated here -->
+          </div>
+        </div>
+      </div>
+      
+      <div id="tab-skills" class="tab-content">
+        <div class="detail-section">
+          <h3>Skills & Endorsements</h3>
+          <div id="skills-container">
+            <!-- Skills will be populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="company.js"></script>
+</body>
+</html>

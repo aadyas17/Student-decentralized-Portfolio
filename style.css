@@ -11,17 +11,54 @@ body {
   color: #e0e8f0;
   line-height: 1.6;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
+/* ANIMATION KEYFRAMES */
+@keyframes fadeSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Homepage */
 .homepage {
-  width: 100vw;           /* Full width */
-  height: 100vh;          /* Full height of the viewport */
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #0d1624; /* Optional: background color */
+  background-color: #0d1624;
   color: #ffffff;
   overflow: hidden;
 }
+
 /* Navbar */
 .navbar {
   display: flex;
@@ -33,6 +70,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 999;
+  animation: fadeSlideDown 0.8s ease-out;
 }
 
 .navbar .logo {
@@ -81,8 +119,9 @@ body {
   padding: 4rem 6%;
   background: linear-gradient(135deg, #0a0f1a, #111b2f);
   gap: 2rem;
-  width: 100vw;           /* Full width */
+  width: 100vw;
   height: 100vh;
+  animation: fadeSlideRight 1s ease-in-out;
 }
 
 .hero-text {
@@ -123,12 +162,15 @@ body {
 }
 
 .hero-image img {
-    width: 100%;
-    max-width: 500px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(87, 166, 255, 0.3);
-    transition: transform 0.3s ease;
-  
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(87, 166, 255, 0.3);
+  transition: transform 0.4s ease;
+}
+
+.hero-image img:hover {
+  transform: scale(1.05);
 }
 
 /* About Section */
@@ -136,9 +178,10 @@ body {
   padding: 4rem 6%;
   background-color: #111b2f;
   text-align: center;
+  animation: fadeInUp 1s ease;
 }
 #about {
-  font-size:2.5rem;
+  font-size: 2.5rem;
 }
 
 .about h2 {
@@ -172,12 +215,12 @@ body {
   background-color: #4098f7;
 }
 
-/* Feature Cards */
-/* Section Layout */
+/* CTA Section */
 .cta-section {
   background-color: #0d1624;
   padding: 4rem 2rem;
   text-align: center;
+  animation: fadeInUp 1s ease;
 }
 
 .cta-heading {
@@ -208,6 +251,7 @@ body {
   color: #d0e4f7;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 1s ease;
 }
 
 .feature-card:hover {
@@ -247,6 +291,3 @@ body {
     text-align: center;
   }
 }
-
-
-

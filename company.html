@@ -36,7 +36,19 @@
       </button>
     </div>
     
-    <div class="search-container">
+    <div class="college-auth-section" id="college-auth-section">
+      <h3>College Authentication Required</h3>
+      <p>To access student data, you need to request authentication from a college/institution</p>
+      <div class="auth-form">
+        <input type="text" id="college-address" placeholder="Enter college wallet address" class="search-input">
+        <button class="request-auth-btn" onclick="requestCollegeAuth()">
+          <i class="fas fa-key"></i> Request Access
+        </button>
+      </div>
+      <div id="auth-status" class="auth-status"></div>
+    </div>
+    
+    <div class="search-container" id="search-container" style="display: none;">
       <div class="search-header">
         <h3>Search for Students</h3>
         <p>Find verified student portfolios based on criteria</p>
@@ -54,13 +66,8 @@
         </div>
         
         <div class="search-group">
-          <label for="search-skills">Skills</label>
+          <label for="search-skills">Skills/Certificates</label>
           <input type="text" id="search-skills" class="search-input" placeholder="E.g. Java, Python, Blockchain">
-        </div>
-        
-        <div class="search-group">
-          <label for="search-cgpa">Minimum CGPA</label>
-          <input type="number" id="search-cgpa" class="search-input" placeholder="Enter minimum CGPA" min="0" max="10" step="0.1">
         </div>
         
         <button type="submit" class="search-btn">
@@ -68,8 +75,8 @@
         </button>
       </form>
       
-      <div class="loader" id="search-loader">
-        <i class="fas fa-spinner"></i>
+      <div class="loader" id="search-loader" style="display: none;">
+        <i class="fas fa-spinner fa-spin"></i>
         <p>Fetching student data from blockchain...</p>
       </div>
       
@@ -93,9 +100,9 @@
       <div class="tab-navigation">
         <button class="tab-button active" onclick="openTab(event, 'tab-personal')">Personal Info</button>
         <button class="tab-button" onclick="openTab(event, 'tab-academic')">Academic Records</button>
-        <button class="tab-button" onclick="openTab(event, 'tab-certificates')">Certificates</button>
         <button class="tab-button" onclick="openTab(event, 'tab-projects')">Projects</button>
-        <button class="tab-button" onclick="openTab(event, 'tab-skills')">Skills & Endorsements</button>
+        <button class="tab-button" onclick="openTab(event, 'tab-extracurricular')">Extracurricular</button>
+        <button class="tab-button" onclick="openTab(event, 'tab-certificates')">Certificates</button>
       </div>
       
       <div id="tab-personal" class="tab-content active">
@@ -107,25 +114,13 @@
               <div class="detail-value" id="modal-student-name">Loading...</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Email</div>
-              <div class="detail-value" id="modal-student-email">Loading...</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Contact Number</div>
-              <div class="detail-value" id="modal-student-contact">Loading...</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">University/College</div>
-              <div class="detail-value" id="modal-student-college">Loading...</div>
-            </div>
-            <div class="detail-item">
               <div class="detail-label">Blockchain ID</div>
               <div class="student-blockchain-id" id="modal-student-blockchain-id">Loading...</div>
             </div>
             <div class="detail-item">
               <div class="detail-label">Verification Status</div>
               <div class="verification-badge" id="modal-student-verification">
-                <i class="fas fa-check-circle"></i> Verified by Institution
+                <i class="fas fa-check-circle"></i> Verified on Blockchain
               </div>
             </div>
           </div>
@@ -134,40 +129,9 @@
       
       <div id="tab-academic" class="tab-content">
         <div class="detail-section">
-          <h3>Academic Information</h3>
-          <div class="detail-grid">
-            <div class="detail-item">
-              <div class="detail-label">Degree</div>
-              <div class="detail-value" id="modal-student-degree">Loading...</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Department</div>
-              <div class="detail-value" id="modal-student-department">Loading...</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Current CGPA</div>
-              <div class="detail-value" id="modal-student-cgpa">Loading...</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Year of Study</div>
-              <div class="detail-value" id="modal-student-year">Loading...</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="detail-section">
-          <h3>Semester Results</h3>
-          <div id="semester-results">
-            <!-- Semester results will be populated here -->
-          </div>
-        </div>
-      </div>
-      
-      <div id="tab-certificates" class="tab-content">
-        <div class="detail-section">
-          <h3>Certificates & Achievements</h3>
-          <div class="certificate-list" id="certificate-list">
-            <!-- Certificates will be populated here -->
+          <h3>Academic Achievements</h3>
+          <div class="academic-list" id="academic-list">
+            <!-- Academic achievements will be populated here -->
           </div>
         </div>
       </div>
@@ -181,11 +145,20 @@
         </div>
       </div>
       
-      <div id="tab-skills" class="tab-content">
+      <div id="tab-extracurricular" class="tab-content">
         <div class="detail-section">
-          <h3>Skills & Endorsements</h3>
-          <div id="skills-container">
-            <!-- Skills will be populated here -->
+          <h3>Extracurricular Activities</h3>
+          <div class="extracurricular-list" id="extracurricular-list">
+            <!-- Extracurricular activities will be populated here -->
+          </div>
+        </div>
+      </div>
+      
+      <div id="tab-certificates" class="tab-content">
+        <div class="detail-section">
+          <h3>Certificates & Achievements</h3>
+          <div class="certificate-list" id="certificate-list">
+            <!-- Certificates will be populated here -->
           </div>
         </div>
       </div>

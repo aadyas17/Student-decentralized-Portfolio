@@ -6,8 +6,8 @@
   }
   
   body {
-    background: #0c0621;
-    color: #ffffff;
+    background:#0a0f1a;
+    color: #e0e8f0;
     line-height: 1.6;
   }
   
@@ -16,7 +16,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px 5%;
-    background-color: rgba(16, 8, 43, 0.9);
+    background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
@@ -26,7 +26,7 @@
   .logo {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #00d9ff;
+    color:  #57a6ff;
   }
   
   nav {
@@ -96,7 +96,7 @@
   }
   
   .disconnect-btn {
-    background: linear-gradient(90deg, #ff5e62, #ff9966);
+    background: linear-gradient(90deg, #4951ed, #211eeb);
     border: none;
     padding: 10px 20px;
     border-radius: 8px;
@@ -186,7 +186,7 @@
   }
   
   .student-card {
-    background: rgba(255, 255, 255, 0.08);
+    background: #1a2332;
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s ease;

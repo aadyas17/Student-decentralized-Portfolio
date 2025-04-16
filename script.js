@@ -5,7 +5,7 @@ const connectWallet = async () => {
         const walletAddress = accounts[0];
         alert("Connected wallet: " + walletAddress);
         // Redirect to portfolio form
-        window.location.href = "portfolio.html";
+        // window.location.href = "portfolio.html";
       } catch (error) {
         console.error("Connection error:", error);
       }
